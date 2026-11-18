@@ -1,6 +1,6 @@
 name: Release
 # Publishes @esfera/sdk on an `sdk-v*` tag and @esfera/cli on a `cli-v*` tag.
-# Skips the publish (with a notice) when NPM_TOKEN is not configured.
+# Publishes through npm trusted publishing (OIDC): no npm token is stored anywhere.
 # Tag sdk-v* BEFORE cli-v*: the CLI depends on the published @esfera/sdk.
 on:
   push:
@@ -8,9 +8,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      # Job-level so the step `if:` conditions below can read it reliably.
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     permissions:
       contents: read
       id-token: write   # npm provenance
@@ -36,9 +33,6 @@ jobs:
           v=$(node -p "require('./packages/${{ steps.which.outputs.pkg }}/package.json').version")
           [ "$v" = "${{ steps.which.outputs.version }}" ] || { echo "tag ${{ steps.which.outputs.version }} ≠ package.json $v"; exit 1; }
       - name: Publish
-        if: ${{ env.NPM_TOKEN != '' }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         # pnpm pack rewrites workspace:* to the real version; npm publish then
         # signs the tarball (pnpm publish silently dropped --provenance in 0.3.0).
         run: |
@@ -47,24 +41,20 @@ jobs:
           (cd packages/${{ steps.which.outputs.pkg }} && pnpm pack --pack-destination "$GITHUB_WORKSPACE/out")
           npm publish ./out/*.tgz --access public --provenance
       - name: Check the published version carries provenance
-        if: ${{ env.NPM_TOKEN != '' }}
         run: |
           sleep 120   # first publishes are staged for a minute or two
           pkg="@esfera/${{ steps.which.outputs.pkg }}@${{ steps.which.outputs.version }}"
           n=$(curl -s "https://registry.npmjs.org/-/npm/v1/attestations/${pkg/\//%2f}" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log((JSON.parse(s).attestations||[]).length)}catch{console.log(0)}})')
           echo "attestations for $pkg: $n"
           [ "$n" -gt 0 ] || { echo "::warning::$pkg has no provenance attestation"; }
-      - name: No NPM_TOKEN — publish skipped
-        if: ${{ env.NPM_TOKEN == '' }}
-        run: echo "::notice::NPM_TOKEN is not set; built and tested but did not publish."
       - name: Homebrew formula (cli only)
-        if: ${{ steps.which.outputs.pkg == 'cli' && env.NPM_TOKEN != '' }}
+        if: ${{ steps.which.outputs.pkg == 'cli' }}
         run: |
           sleep 60   # registry propagation
           node packages/cli/scripts/brew-formula.mjs "${{ steps.which.outputs.version }}" esfera.rb
           cat esfera.rb
       - uses: actions/upload-artifact@v4
-        if: ${{ steps.which.outputs.pkg == 'cli' && env.NPM_TOKEN != '' }}
+        if: ${{ steps.which.outputs.pkg == 'cli' }}
         with:
           name: homebrew-formula
           path: esfera.rb

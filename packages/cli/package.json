@@ -1,6 +1,6 @@
 {
   "name": "@esfera/cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "esfera — convert spatial audio masters to IAMF / Eclipsa from the terminal.",
   "license": "Apache-2.0",
   "private": false,
