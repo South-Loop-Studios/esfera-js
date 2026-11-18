@@ -45,7 +45,7 @@ jobs:
           npm install -g npm@11
           mkdir -p out
           (cd packages/${{ steps.which.outputs.pkg }} && pnpm pack --pack-destination "$GITHUB_WORKSPACE/out")
-          npm publish out/*.tgz --access public --provenance
+          npm publish ./out/*.tgz --access public --provenance
       - name: Check the published version carries provenance
         if: ${{ env.NPM_TOKEN != '' }}
         run: |
