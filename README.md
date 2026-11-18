@@ -10,6 +10,8 @@ The official JavaScript SDK and command-line tool for the [Esfera Converter API]
 ```sh
 npm install @esfera/sdk
 npm install -g @esfera/cli
+# or
+brew install south-loop-studios/esfera/esfera
 ```
 
 You need an API key from the [Esfera Console](https://console.esfera.audio). Guides, the API reference and examples are at [developers.esfera.audio](https://developers.esfera.audio).
@@ -23,7 +25,7 @@ pnpm check   # build, test, smoke-test on bare Node, and compare the API snapsho
 
 `openapi/v1.json` is a copy of the document the API serves at `/v1/openapi.json`. The SDK's contract test checks its types against it, and `pnpm openapi:check` fails when the copy drifts from what the API actually returns.
 
-Releases are cut from tags: `sdk-v<version>` publishes `@esfera/sdk`, then `cli-v<version>` publishes `@esfera/cli`, both with npm provenance.
+Releases are cut from tags: `sdk-v<version>` publishes `@esfera/sdk`, then `cli-v<version>` publishes `@esfera/cli`, both with npm provenance. The [Homebrew tap](https://github.com/South-Loop-Studios/homebrew-esfera) picks up a new CLI release by itself about a day later.
 
 ## Issues
 

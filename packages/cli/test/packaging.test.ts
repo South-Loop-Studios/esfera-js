@@ -3,20 +3,6 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { renderFormula } from "../scripts/brew-formula.mjs";
-
-describe("Homebrew formula", () => {
-  it("renders the npm tarball URL, its sha256, a node dependency and the std npm install", () => {
-    const rb = renderFormula({ version: "0.1.0", sha256: "a".repeat(64) });
-    expect(rb).toContain('url "https://registry.npmjs.org/@esfera/cli/-/cli-0.1.0.tgz"');
-    expect(rb).toContain(`sha256 "${"a".repeat(64)}"`);
-    expect(rb).toContain('depends_on "node"');
-    expect(rb).toContain('system "npm", "install", *std_npm_args');
-    expect(rb).toContain('bin.install_symlink Dir["#{libexec}/bin/*"]');
-    expect(rb).toMatch(/test do[\s\S]*--version[\s\S]*end/);
-    expect(rb).toContain("class Esfera < Formula");
-  });
-});
 
 describe("packed manifests", () => {
   it("neither package ships a workspace:* dependency or a private flag", () => {
