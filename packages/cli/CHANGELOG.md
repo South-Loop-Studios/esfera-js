@@ -2,7 +2,7 @@
 
 ## 0.3.1 — 2026-11-18
 
-Released from the public [esfera-js](https://github.com/South-Loop-Studios/esfera-js) repo through npm trusted publishing. No API changes. Depends on `@esfera/sdk` 0.3.1.
+Released from the public [esfera-js](https://github.com/orbitspatial/esfera-js) repo through npm trusted publishing. No API changes. Depends on `@esfera/sdk` 0.3.1.
 
 ## 0.3.0 — 2026-11-18
 

@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/South-Loop-Studios/esfera-js.git",
+    "url": "git+https://github.com/orbitspatial/esfera-js.git",
     "directory": "packages/cli"
   },
   "homepage": "https://developers.esfera.audio",
@@ -42,7 +42,7 @@
     "vitest": "^3.2.4"
   },
   "bugs": {
-    "url": "https://github.com/South-Loop-Studios/esfera-js/issues"
+    "url": "https://github.com/orbitspatial/esfera-js/issues"
   },
   "keywords": [
     "spatial audio",

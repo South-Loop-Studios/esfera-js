@@ -25,6 +25,14 @@ function fakeDeps(over: Partial<AuthDeps> & { usage?: () => Promise<unknown> } =
     sdk: () => ({ usage: { get: over.usage ?? (async () => ({ plan: "pro" })) } }) as never,
     ...over,
   };
+  // `auth login` on a TTY tries browser sign-in first. Without these stubs it
+  // reaches the real API, so the outcome depends on what production supports.
+  Object.assign(deps, {
+    device: { start: async () => "unsupported", poll: async () => { throw new Error("device poll must not run"); } },
+    fetch: async () => { throw new Error("tests must not reach the network"); },
+    open: async () => false,
+    hostname: () => "test-host",
+  });
   return { deps, out, err, dir, text: () => out.join("") + err.join(""), cleanup: () => rmSync(dir, { recursive: true, force: true }) };
 }
 
