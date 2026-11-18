@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Screen > snapshot: Figma 1 home screen at 108 1`] = `
+"● E S F E R A                                                                                        session
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  convert · presets · list · get <id> · help · quit
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ›                                                                        convert · presets · list · help │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+  esf_k_test_3qrMTinZjc · TEST · staging-api.esfera.audio · no jobs running · help ^C quit
+"
+`;

@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`convert flow > renders the profile step 1`] = `
+"  ✓ file     master.wav · 28 ch · 10:00
+  ✓ preset   esfera
+  P R O F I L E
+  ❯ auto  the preset picks by content → base-enhanced for this master
+    simple  Simple · eclipsa · 2 el / 16 ch   · this master has 16 objects
+    base  Base · eclipsa · 2 el / 16 ch   · this master has 16 objects
+    base-enhanced  Base-Enhanced · eclipsa · 28 el / 28 ch
+    base-advanced  Base-Advanced · eclipsa · 28 el / 28 ch   · read-only
+    advanced-1  Advanced 1 · iamf-2 · 28 el / 28 ch
+    advanced-2  Advanced 2 · iamf-2 · 28 el / 28 ch
+  ↑↓ choose · Enter · Esc back"
+`;

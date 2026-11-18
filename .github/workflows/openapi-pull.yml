@@ -1,0 +1,24 @@
+name: OpenAPI snapshot
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: node scripts/openapi-pull.mjs
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(openapi): snapshot from staging"
+          title: "chore(openapi): snapshot from staging ${{ github.run_started_at }}"
+          body: "The served `/v1/openapi.json` on staging changed. Review the diff, then update `packages/sdk` types/`*_FIELDS` in the same PR. The API reference on developers.esfera.audio is regenerated separately."
+          branch: chore/openapi-snapshot
+          add-paths: openapi/v1.json

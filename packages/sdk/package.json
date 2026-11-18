@@ -1,0 +1,58 @@
+{
+  "name": "@esfera/sdk",
+  "version": "0.3.0",
+  "description": "Esfera Converter API client — convert spatial audio masters to IAMF / Eclipsa from your own pipeline. Server-side only: it carries your API key.",
+  "license": "Apache-2.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/South-Loop-Studios/esfera-js.git",
+    "directory": "packages/sdk"
+  },
+  "homepage": "https://developers.esfera.audio",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "smoke": "node test/smoke.node.mjs",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.4"
+  },
+  "bugs": {
+    "url": "https://github.com/South-Loop-Studios/esfera-js/issues"
+  },
+  "keywords": [
+    "spatial audio",
+    "IAMF",
+    "Eclipsa Audio",
+    "ADM",
+    "Dolby Atmos conversion",
+    "Esfera"
+  ]
+}

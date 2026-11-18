@@ -1,0 +1,56 @@
+name: Release
+# Publishes @esfera/sdk on an `sdk-v*` tag and @esfera/cli on a `cli-v*` tag.
+# Skips the publish (with a notice) when NPM_TOKEN is not configured.
+# Tag sdk-v* BEFORE cli-v*: the CLI depends on the published @esfera/sdk.
+on:
+  push:
+    tags: ["sdk-v*", "cli-v*"]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      # Job-level so the step `if:` conditions below can read it reliably.
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    permissions:
+      contents: read
+      id-token: write   # npm provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build && pnpm test && pnpm smoke
+      - id: which
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          case "$tag" in
+            sdk-v*) echo "pkg=sdk" >> "$GITHUB_OUTPUT"; echo "version=${tag#sdk-v}" >> "$GITHUB_OUTPUT" ;;
+            cli-v*) echo "pkg=cli" >> "$GITHUB_OUTPUT"; echo "version=${tag#cli-v}" >> "$GITHUB_OUTPUT" ;;
+          esac
+      - name: Check the tag matches package.json
+        run: |
+          v=$(node -p "require('./packages/${{ steps.which.outputs.pkg }}/package.json').version")
+          [ "$v" = "${{ steps.which.outputs.version }}" ] || { echo "tag ${{ steps.which.outputs.version }} ≠ package.json $v"; exit 1; }
+      - name: Publish
+        if: ${{ env.NPM_TOKEN != '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm --filter @esfera/${{ steps.which.outputs.pkg }} publish --access public --provenance --no-git-checks
+      - name: No NPM_TOKEN — publish skipped
+        if: ${{ env.NPM_TOKEN == '' }}
+        run: echo "::notice::NPM_TOKEN is not set; built and tested but did not publish."
+      - name: Homebrew formula (cli only)
+        if: ${{ steps.which.outputs.pkg == 'cli' && env.NPM_TOKEN != '' }}
+        run: |
+          sleep 60   # registry propagation
+          node packages/cli/scripts/brew-formula.mjs "${{ steps.which.outputs.version }}" esfera.rb
+          cat esfera.rb
+      - uses: actions/upload-artifact@v4
+        if: ${{ steps.which.outputs.pkg == 'cli' && env.NPM_TOKEN != '' }}
+        with:
+          name: homebrew-formula
+          path: esfera.rb

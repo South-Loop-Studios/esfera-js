@@ -1,0 +1,178 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`direction D screens at 108 columns (the Figma frames) > conversions list 1`] = `
+"E S F E R A                                                                                42 · newest first
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+C O N V E R S I O N S
+
+  ●  conv_8f3a2c91  Moment 2 (Atmos).wav  ready     esfera      advanced-2     4 min ago      
+  ◐  conv_1b77e0d4  PERLAS_final_v3.wav   encoding  youtube     base           2 min ago · 34%
+  ◌  conv_c0ffee12  Obsidian (stems).wav  queued    esfera      auto           4 min ago      
+  ●  conv_77aa0b3e  Horizon_ADM.wav       ready     oa3         base           2 days ago     
+  ✗  conv_42d1f9ab  demo_bed_only.wav     error     esfera      advanced-1     3 days ago     
+  ●  conv_9e8d7c6b  Sunrise_7.1.4.wav     ready     bed714_3oa  base-enhanced  4 days ago     
+
+  1–6 of 42   ·   --page 2   ·   --status ready   ·   --json"
+`;
+
+exports[`direction D screens at 108 columns (the Figma frames) > convert · live 1`] = `
+"E S F E R A                                                                    LIVE · api.esfera.audio · ben
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+C O N V E R T   Moment 2 (Atmos).wav  →  moment-2.iamf
+
+  S O U R C E
+  ADM  28 ch · 48 kHz · 24-bit · 6:42 · 1 programme · 16 objects
+
+  S T A G E S
+✓ uploaded              1.9 GB in 0:46 · 42 MB/s
+✓ analysed              Esfera keeps the objects discrete
+◆ encoding              ███████████████░░░░░░░░░░░░░   52%   advanced-2 · ~0:48 left
+· ready                 
+
+  conv_8f3a2c91   ·   ^C detaches, the job keeps running"
+`;
+
+exports[`direction D screens at 108 columns (the Figma frames) > convert · ready 1`] = `
+"E S F E R A                                                                    LIVE · api.esfera.audio · ben
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+C O N V E R T   Moment 2 (Atmos).wav  →  moment-2.iamf
+
+✓ uploaded              1.9 GB in 0:46
+✓ analysed              7.1.4 bed + 16 objects
+✓ encoded               1:51
+✓ ready                 
+
+  R E S U L T
+  file        moment-2.iamf   15.8 MB
+  profile     Advanced-2   28 ch
+  loudness    -18.0 LUFS   matched to the source
+  retention   72 h   esfera conversions get conv_8f3a2c91"
+`;
+
+exports[`direction D screens at 108 columns (the Figma frames) > error 1`] = `
+"E S F E R A                                                                    LIVE · api.esfera.audio · ben
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+C O N V E R T   master.wav  →  —
+
+  ✗ profile not writable   422 · profile-not-writable
+
+  base-advanced is defined by IAMF 2.0, but OrbitCore 2.2.0 reads it and will not declare it.
+
+  W R I T A B L E
+  simple · base · base-enhanced · advanced-1 · advanced-2
+
+  N E X T
+  ├─ esfera presets
+  └─ developers.esfera.audio/reference/errors#profile-not-writable
+
+  exit 3"
+`;
+
+exports[`direction D screens at 108 columns (the Figma frames) > login 1`] = `
+"E S F E R A                                                                                 api.esfera.audio
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+L O G I N
+
+✓ signed in             Sam Rivera · pro · LIVE
+  key         esf_k_live_7fQ2mR8xKp
+  saved to    ~/.config/esfera/credentials   0600
+
+  next   esfera convert master.wav --preset esfera"
+`;
+
+exports[`direction D screens at 108 columns (the Figma frames) > presets 1`] = `
+"E S F E R A                                                                                  OrbitCore 2.2.0
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+P R E S E T S
+
+  P R O F I L E S
+  eclipsa  simple          1 el  16 ch  —        writable 
+           base            2 el  18 ch  —        writable 
+           base-enhanced  28 el  28 ch  —        writable 
+  iamf-2   base-advanced  18 el  18 ch  objects  read-only
+           advanced-1     18 el  18 ch  objects  writable 
+           advanced-2     28 el  28 ch  objects  writable 
+
+  P R E S E T S
+  esfera      base-enhanced / advanced-1 / advanced-2  keeps objects  adm
+  youtube     base                                     folds objects  adm
+  bed714_3oa  base-enhanced                            scene          adm
+  oa3         base                                     scene          adm
+  an ambisonic file is kept whole at its own order by esfera and youtube (a 3OA stays 3OA); the two scene p…
+
+  --profile <id> on convert · base-advanced is listed so you know it exists, not so you can pick it"
+`;
+
+exports[`renderDeviceCode > at 72 1`] = `
+"E S F E R A                              TEST · staging-api.esfera.audio
+────────────────────────────────────────────────────────────────────────
+L O G I N
+
+  C O D E
+  WXYZ-1234
+
+  https://staging.esfera.audio/cli
+  opening your browser…
+
+  waiting · ^C cancels"
+`;
+
+exports[`renderDeviceCode > at 108 1`] = `
+"E S F E R A                                                                  TEST · staging-api.esfera.audio
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+L O G I N
+
+  C O D E
+  WXYZ-1234
+
+  https://staging.esfera.audio/cli
+  opening your browser…
+
+  waiting · ^C cancels"
+`;
+
+exports[`renderJobLine > error at 108 1`] = `"✗ 5e424800 · Illuma - Demo Track - Orbit.iamf · error · encoder rejected the programme"`;
+
+exports[`renderJobLine > ok at 108 1`] = `"✓ 5e424800 · Illuma - Demo Track - Orbit.iamf · ready · advanced-1 · 7.0 MB"`;
+
+exports[`sessionBanner (Figma 'banner · M PICKED') > snapshots at 108 and 72 1`] = `
+"● E S F E R A                                                                                        session
+────────────────────────────────────────────────────────────────────────────────────────────────────────────"
+`;
+
+exports[`sessionBanner (Figma 'banner · M PICKED') > snapshots at 108 and 72 2`] = `
+"● E S F E R A                                                    session
+────────────────────────────────────────────────────────────────────────"
+`;
+
+exports[`usage screen > snapshot: usage at 108 and 72 1`] = `
+"E S F E R A                                                                  TEST · staging-api.esfera.audio
+────────────────────────────────────────────────────────────────────────────────────────────────────────────
+U S A G E   pro plan
+
+  M I N U T E S
+  ████░░░░░░░░░░░░░░░░░░░░░░░░  42 / 300 min   resets 1 Dec
+
+  used        42 min   this period
+  remaining   268 min   includes 10 min credit
+  per file    120 min · up to 17.2 GB   longest and largest master accepted
+  concurrent  2 jobs   1 running now
+  rate limit  60 / min
+  retention   72 h   outputs stay downloadable this long"
+`;
+
+exports[`usage screen > snapshot: usage at 108 and 72 2`] = `
+"E S F E R A                              TEST · staging-api.esfera.audio
+────────────────────────────────────────────────────────────────────────
+U S A G E   pro plan
+
+  M I N U T E S
+  ████░░░░░░░░░░░░░░░░░░░░░░░░  42 / 300 min   resets 1 Dec
+
+  used        42 min   this period
+  remaining   268 min   includes 10 min credit
+  per file    120 min · up to 17.2 GB   longest and largest master acce…
+  concurrent  2 jobs   1 running now
+  rate limit  60 / min
+  retention   72 h   outputs stay downloadable this long"
+`;
