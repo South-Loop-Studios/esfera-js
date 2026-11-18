@@ -39,7 +39,21 @@ jobs:
         if: ${{ env.NPM_TOKEN != '' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm --filter @esfera/${{ steps.which.outputs.pkg }} publish --access public --provenance --no-git-checks
+        # pnpm pack rewrites workspace:* to the real version; npm publish then
+        # signs the tarball (pnpm publish silently dropped --provenance in 0.3.0).
+        run: |
+          npm install -g npm@11
+          mkdir -p out
+          (cd packages/${{ steps.which.outputs.pkg }} && pnpm pack --pack-destination "$GITHUB_WORKSPACE/out")
+          npm publish out/*.tgz --access public --provenance
+      - name: Check the published version carries provenance
+        if: ${{ env.NPM_TOKEN != '' }}
+        run: |
+          sleep 120   # first publishes are staged for a minute or two
+          pkg="@esfera/${{ steps.which.outputs.pkg }}@${{ steps.which.outputs.version }}"
+          n=$(curl -s "https://registry.npmjs.org/-/npm/v1/attestations/${pkg/\//%2f}" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log((JSON.parse(s).attestations||[]).length)}catch{console.log(0)}})')
+          echo "attestations for $pkg: $n"
+          [ "$n" -gt 0 ] || { echo "::warning::$pkg has no provenance attestation"; }
       - name: No NPM_TOKEN — publish skipped
         if: ${{ env.NPM_TOKEN == '' }}
         run: echo "::notice::NPM_TOKEN is not set; built and tested but did not publish."
