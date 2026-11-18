@@ -47,16 +47,3 @@ jobs:
           n=$(curl -s "https://registry.npmjs.org/-/npm/v1/attestations/${pkg/\//%2f}" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log((JSON.parse(s).attestations||[]).length)}catch{console.log(0)}})')
           echo "attestations for $pkg: $n"
           [ "$n" -gt 0 ] || { echo "::warning::$pkg has no provenance attestation"; }
-      - name: Homebrew formula (cli only)
-        if: ${{ steps.which.outputs.pkg == 'cli' }}
-        run: |
-          # The tarball can take several minutes to appear after npm accepts it.
-          url="https://registry.npmjs.org/@esfera/cli/-/cli-${{ steps.which.outputs.version }}.tgz"
-          for i in $(seq 1 40); do curl -sfI "$url" >/dev/null && break; sleep 15; done
-          node packages/cli/scripts/brew-formula.mjs "${{ steps.which.outputs.version }}" esfera.rb
-          cat esfera.rb
-      - uses: actions/upload-artifact@v4
-        if: ${{ steps.which.outputs.pkg == 'cli' }}
-        with:
-          name: homebrew-formula
-          path: esfera.rb
