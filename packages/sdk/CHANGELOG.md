@@ -1,6 +1,10 @@
 # @esfera/sdk
 
-## 0.3.0 — unreleased
+## 0.3.1 — 2026-11-18
+
+Released from the public [esfera-js](https://github.com/South-Loop-Studios/esfera-js) repo through npm trusted publishing. No API changes. Published with npm provenance (0.3.0 shipped without it).
+
+## 0.3.0 — 2026-11-18
 
 Licensed Apache-2.0 (LICENSE and NOTICE ship in the package). Includes everything listed under 0.2.0 and 0.1.0 below, which were never published.
 

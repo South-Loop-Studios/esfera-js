@@ -1,6 +1,6 @@
 {
   "name": "@esfera/sdk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Esfera Converter API client — convert spatial audio masters to IAMF / Eclipsa from your own pipeline. Server-side only: it carries your API key.",
   "license": "Apache-2.0",
   "private": false,
