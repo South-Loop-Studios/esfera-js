@@ -50,7 +50,9 @@ jobs:
       - name: Homebrew formula (cli only)
         if: ${{ steps.which.outputs.pkg == 'cli' }}
         run: |
-          sleep 60   # registry propagation
+          # The tarball can take several minutes to appear after npm accepts it.
+          url="https://registry.npmjs.org/@esfera/cli/-/cli-${{ steps.which.outputs.version }}.tgz"
+          for i in $(seq 1 40); do curl -sfI "$url" >/dev/null && break; sleep 15; done
           node packages/cli/scripts/brew-formula.mjs "${{ steps.which.outputs.version }}" esfera.rb
           cat esfera.rb
       - uses: actions/upload-artifact@v4
